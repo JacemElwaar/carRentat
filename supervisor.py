@@ -155,13 +155,3 @@ while True:
         if 'client_agent' in event:
             client_agetn_response = event['client_agent']
             print("Client's agent response:", client_agetn_response['messages'][0].content)
-
-
-
-
-
-
-
-
-
-

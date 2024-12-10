@@ -34,6 +34,7 @@ llm =  ChatGroq(
 class State(TypedDict):
 
     messages: Annotated[list[AnyMessage], add_messages]
+
     next: str
 
 
@@ -184,12 +185,13 @@ execute_query = QuerySQLDataBaseTool(db=db)
 write_query = create_sql_query_chain_v2(llm, db, k=top_k)
 agentSQL = write_query | execute_query
 
-def summarize_text(text):
-    # Implementa una funció per resumir text abans d'enviar-lo.
-    summarized = text[:500]  # Trunca el text a una mida segura.
-    return summarized
-
 def agent_SQL(state: State):
     messages=state["messages"]
-    response=agentSQL.invoke({"question": messages[0]})
-    return {"messages": [summarize_text(response)]}
+    response=agentSQL.invoke({"question": messages[-1].content})
+    return {"messages": [response]}
+
+#while True:
+ #   user_input=(input("user input:"))
+#
+  #  print(agentSQL.invoke({"question": "Find cars that match the following criteria:\n - color: blue"}))
+  #  print(agentSQL.invoke({"question": user_input})) 
