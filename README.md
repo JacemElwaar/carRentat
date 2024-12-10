@@ -1,1 +1,1 @@
-Fill this with information about how to run the code.
+Open Supervisor folder and run SupervisorV2
